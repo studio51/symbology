@@ -1,0 +1,21 @@
+# Barcoder · Studio51 · ruby
+#
+# Inherits the host application's configuration so the gem is linted to the same
+# house style while it lives in-tree, and only re-scopes the Studio51 cops'
+# `Include` patterns — those are written relative to the config file that
+# declares them, so `lib/**/*.rb` at the repository root does not match
+# `gems/barcoder/lib`.
+#
+# On extraction to a standalone gem, replace the `inherit_from` line with the
+# `inherit_gem` / `plugins` / `require` block from the root `.rubocop.yml`. That
+# is the only change this file needs.
+#
+inherit_from: ../../.rubocop.yml
+
+Studio51/CommentBlockTermination:
+  Include:
+    - "lib/**/*.rb"
+
+Studio51/EmptyLineBeforeTrailingExpression:
+  Include:
+    - "lib/**/*.rb"
