@@ -24,15 +24,10 @@ module Barcoder
     # digit in its cell, which is how a printed EAN spaces its numbers: evenly
     # across the bars they encode, not evenly across the whole symbol.
     #
-    # @!attribute [r] digits
-    #   @return [String] the digits to print.
-    # @!attribute [r] from
-    #   @return [Integer] the first module of the span, inclusive.
-    # @!attribute [r] to
-    #   @return [Integer] the last module of the span, inclusive.
+    # `digits` is what to print, and `from` and `to` are the first and last
+    # module of the span it labels, both inclusive.
     #
     Text = Data.define(:digits, :from, :to) do
-
       # The span's width.
       #
       # @return [Integer] the number of modules covered.
@@ -42,15 +37,10 @@ module Barcoder
 
     # A drawable bar: a run of adjacent dark modules of the same length.
     #
-    # @!attribute [r] from
-    #   @return [Integer] the first module of the bar, inclusive.
-    # @!attribute [r] width
-    #   @return [Integer] the bar's width in modules.
-    # @!attribute [r] long
-    #   @return [Boolean] whether the bar descends past the others.
+    # `from` is the bar's first module and `width` how many it covers; `long`
+    # says whether it is a guard bar, drawn past the others.
     #
     Bar = Data.define(:from, :width, :long) do
-
       # Whether the bar descends through the text band.
       #
       # @return [Boolean] true for a guard bar.
