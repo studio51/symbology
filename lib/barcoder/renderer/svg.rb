@@ -36,11 +36,15 @@ module Barcoder
 
       # Draws the symbol.
       #
+      # There is no XML declaration. It is optional in a standalone `.svg` file
+      # — UTF-8 is the default already — and actively wrong the moment the markup
+      # is inlined into an HTML page, where a parser reads `<?xml …?>` as a bogus
+      # comment. Leaving it out makes one string that is correct in both places.
+      #
       # @return [String] the SVG document.
       #
       def draw
         <<~SVG
-          <?xml version="1.0" encoding="UTF-8"?>
           <svg xmlns="http://www.w3.org/2000/svg" width="#{ number(geometry.width) }" height="#{ number(geometry.height) }" viewBox="0 0 #{ number(geometry.width) } #{ number(geometry.height) }" role="img" aria-label="#{ label }" data-barcoder="#{ Barcoder::VERSION }">
           #{ paper }#{ bars }#{ digits }</svg>
         SVG

@@ -19,10 +19,10 @@ require "barcoder/renderer/png"
 # EAN-13, EAN-8 or UPC-A symbol those digits are, ready to be shown on a page,
 # put in an email or sent to a label printer.
 #
-#   Barcoder.svg("5030917236073")             #=> "<?xml version…"
-#   Barcoder.png("5030917236073", height: 40) #=> "\x89PNG\r\n…"
+#   Barcoder.svg("5030917236075")             #=> "<svg xmlns=…"
+#   Barcoder.png("5030917236075", height: 40) #=> "\x89PNG\r\n…"
 #
-#   Barcoder.encodable?("5030917236073") #=> true
+#   Barcoder.encodable?("5030917236075") #=> true
 #   Barcoder.symbology_for("036000291452") #=> Barcoder::Symbology::UPCA
 #
 # ## What it will not do

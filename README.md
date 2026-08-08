@@ -8,7 +8,7 @@ nothing in that application — or on any other gem — so extracting it is a
 directory move.
 
 ```ruby
-Barcoder.svg("5901234123457")             #=> "<?xml version=\"1.0\"…"
+Barcoder.svg("5901234123457")             #=> "<svg xmlns=\"http://www.w3.org/2000/svg\"…"
 Barcoder.png("5901234123457", height: 40) #=> "\x89PNG\r\n…"
 ```
 

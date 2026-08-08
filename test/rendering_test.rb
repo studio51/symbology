@@ -34,6 +34,14 @@ class BarcoderRenderingTest < ActiveSupport::TestCase
     assert_includes Barcoder.svg(VALUE), %(aria-label="EAN-13 barcode 5901234123457")
   end
 
+  # An XML declaration is optional in a standalone .svg and read as a bogus
+  # comment the moment the markup is inlined into a page — which is exactly what
+  # the Vault landing page does with it.
+  #
+  test "an SVG opens with the symbol, so it can be inlined into a page" do
+    assert Barcoder.svg(VALUE).start_with?("<svg ")
+  end
+
   test "an SVG prints every digit, and none when asked not to" do
     printed = Barcoder.svg(VALUE).scan(%r{<text[^>]*>(\d)</text>}).flatten.join
 
