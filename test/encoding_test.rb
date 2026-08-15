@@ -7,7 +7,7 @@ require "test_helper"
 # the standards' own worked examples, so this file is what proves Barcoder draws
 # EAN and UPC rather than something that merely looks like them.
 #
-class BarcoderEncodingTest < ActiveSupport::TestCase
+class BarcoderEncodingTest < Minitest::Test
   EAN13 = "5901234123457".freeze
   EAN13_MODULES = "10100010110100111011001100100110111101001110101010110011011011001000010101110010011101000100101".freeze
 

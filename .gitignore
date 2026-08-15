@@ -1,0 +1,16 @@
+# Studio51 · ruby-gem
+.DS_Store
+*.log
+*.gem
+/.bundle/
+/vendor/bundle
+/pkg/
+/tmp/
+/coverage/
+/doc/
+/.yardoc/
+# Libraries don't commit the lockfile; consumers resolve their own.
+Gemfile.lock
+.env
+.env.*
+!.env.example

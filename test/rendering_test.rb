@@ -8,7 +8,7 @@ require "test_helper"
 # them. Everything else here checks the picture is well formed; that one checks
 # it still says the number.
 #
-class BarcoderRenderingTest < ActiveSupport::TestCase
+class BarcoderRenderingTest < Minitest::Test
   VALUE = "5901234123457".freeze
 
   # --- SVG -------------------------------------------------------------------

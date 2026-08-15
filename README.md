@@ -2,10 +2,15 @@
 
 > The number on the back of the box, drawn as the barcode it was printed as.
 
-Barcoder is a self-contained Ruby gem. It currently lives in-tree at
-`gems/barcoder` inside games.directory and is loaded as a path gem; it depends on
-nothing in that application — or on any other gem — so extracting it is a
-directory move.
+Barcoder is a self-contained Ruby gem with **no dependencies** — not on Rails,
+not on an imaging library, not on anything. Digits in, image out.
+
+It was built in-tree at `gems/barcoder` inside
+[games.directory](https://games.directory) and extracted here with its history.
+
+```ruby
+gem "studio51-barcoder"
+```
 
 ```ruby
 Barcoder.svg("5901234123457")             #=> "<svg xmlns=\"http://www.w3.org/2000/svg\"…"
@@ -97,19 +102,23 @@ symbol is well under a kilobyte.
 - `lib/barcoder/font.rb` — ten five-by-seven digits, because there is no font on
   the other side of a PNG.
 
-## Tests
-
-The gem's tests live with the host application's, at `test/lib/barcoder`, and
-run with the rest of the suite:
+## Development
 
 ```sh
-bin/rails test test/lib/barcoder
+bundle install
+bundle exec rake
+bundle exec rubocop
 ```
 
-They assert the encodings against the reference patterns published for
+The tests assert the encodings against the reference patterns published for
 `5901234123457`, `036000291452` and `96385074`, and read the modules back out of
 a rendered PNG to check the picture says what the pattern does.
 
-## License
+Minitest is the only test dependency. The two `ActiveSupport::TestCase`
+conveniences the suite was written against — `test "…" do` and `assert_not*` —
+are carried in `test/test_helper.rb` rather than pulling Rails into the
+development bundle of a gem whose whole claim is that it needs nothing.
 
-Proprietary, © 2015–2026 Studio51 Solutions. All rights reserved.
+## Licence
+
+Apache-2.0 © Studio51 Solutions. See [LICENSE](LICENSE) and [NOTICE](NOTICE).

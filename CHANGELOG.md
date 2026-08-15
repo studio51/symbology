@@ -6,6 +6,24 @@ All notable changes to Barcoder are documented here, following
 
 ## [Unreleased]
 
+### Added
+
+- Extracted from games.directory, where it was built in-tree at `gems/barcoder`.
+  History is preserved.
+- Apache-2.0 licence, replacing the placeholder that deliberately deferred the
+  decision to extraction time.
+
+### Changed
+
+- Published as `studio51-barcoder`: `barcoder` on RubyGems is a dormant 2010 gem
+  wrapping GBarcode. The namespace, the entry point and `require "barcoder"` are
+  unchanged.
+- The suite runs on plain Minitest. It was written against
+  `ActiveSupport::TestCase`, and the two conveniences it used — `test "…" do` and
+  the `assert_not*` spellings — are now carried in `test/test_helper.rb`. A gem
+  whose entire claim is that it depends on nothing should not put Rails in
+  anyone's development bundle to run its own tests.
+
 ## [0.1.0]
 
 ### Added
