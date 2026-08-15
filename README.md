@@ -2,6 +2,9 @@
 
 > The number on the back of the box, drawn as the barcode it was printed as.
 
+[![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue)](LICENSE)
+[![CI](https://github.com/studio51/barcoder/actions/workflows/ci.yml/badge.svg)](https://github.com/studio51/barcoder/actions/workflows/ci.yml)
+
 Barcoder is a self-contained Ruby gem with **no dependencies** — not on Rails,
 not on an imaging library, not on anything. Digits in, image out.
 
@@ -17,108 +20,28 @@ Barcoder.svg("5901234123457")             #=> "<svg xmlns=\"http://www.w3.org/20
 Barcoder.png("5901234123457", height: 40) #=> "\x89PNG\r\n…"
 ```
 
-## What it draws
-
-| Symbology | Digits | Where it turns up |
-| --------- | ------ | ----------------- |
-| EAN-13    | 13     | Every game sold outside North America |
-| UPC-A     | 12     | North American releases |
-| EAN-8     | 8      | Boxes too small for a full EAN-13, and the things inside them |
-
-Which one a value is depends only on how many digits it has, so you never have
-to say:
-
 ```ruby
-Barcoder.symbology_for("036000291452") #=> Barcoder::Symbology::UPCA
-Barcoder.symbology_for("96385074")     #=> Barcoder::Symbology::EAN8
+Barcoder.svg("5901234123457")             #=> "<svg xmlns=\"http://www.w3.org/2000/svg\"…"
+Barcoder.png("5901234123457", height: 40) #=> "\x89PNG\r\n…"
 ```
 
-## What it refuses to draw
+It encodes EAN-13, UPC-A and EAN-8, lays a symbol out to the proportions the
+standards specify — quiet zones, guard bars descending through the printed
+digits, the leading digit set in the margin — and refuses to draw a code that
+fails its own check digit, because a symbol no scanner will read back is worse
+than no symbol at all.
 
-A code that fails its own check digit.
+## Navigation
 
-Every symbology here ends in a digit computed from the ones before it. A code
-that fails it was mistyped, mis-scanned or invented, and the symbol drawn from it
-is a picture no scanner will read back — worse than no picture, because it looks
-like it works. `Barcoder.encode` raises `Barcoder::InvalidCheckDigit` rather than
-draw one.
+This repository adheres to the [Studio51 Solutions Common Standard v1](https://github.com/studio51/standards/blob/main/standards/common/v1/STANDARD.md), with each section documented properly in its own file.
 
-Ask first if you hold numbers of uncertain provenance:
+- [Architecture](docs/ARCHITECTURE.md) — how a symbol is built, file by file
+- [Install & setup](docs/INSTALL.md)
+- [Usage](docs/USAGE.md) — what it draws, what it refuses to draw, and the options
+- [Changelog](CHANGELOG.md)
+- [Contributing](CONTRIBUTING.md)
+- [Security](SECURITY.md)
 
-```ruby
-Barcoder.encodable?("5901234123457") #=> true
-Barcoder.encodable?("5901234123456") #=> false — check digit should be 7
-Barcoder.encodable?("DOOM")          #=> false
-```
+## License
 
-## Options
-
-Both formats take the same ones:
-
-| Option         | Default     | |
-| -------------- | ----------- | - |
-| `module_width` | `2` (SVG), `3` (PNG) | What the narrowest bar is worth, in pixels. |
-| `height`       | `60`        | How tall the **bars** are. The printed digits are added below that. |
-| `text`         | `true`      | Print the digits under the symbol. |
-| `foreground`   | `"#000000"` | The bars and the digits. |
-| `background`   | `"#FFFFFF"` | The paper. `nil` leaves it transparent. |
-| `quiet_zone`   | `nil`       | Override the standard's margins, in modules. One number, or a `[left, right]` pair. |
-
-SVG also takes `font_family` (default `"monospace"`).
-
-The defaults are the proportions a printed symbol has: guard bars descending
-through the text band, the digits set in the gaps between them, the leading digit
-of an EAN-13 in the left quiet zone, and — on a UPC-A — the number-system and
-check digits outside the bars with their own bars extended to match the guards.
-
-```ruby
-Barcoder.png("5901234123457", module_width: 4, height: 120, background: nil)
-Barcoder.svg("5901234123457", text: false, foreground: "#1f2937")
-```
-
-### A module has to be a whole number of pixels
-
-In a raster it does, anyway. Half a pixel of bar is either rounded away or
-smeared across two, and a bar of the wrong width is a digit of a different value
-— so the PNG renderer rounds `module_width` and `height` to whole pixels itself
-rather than leave it to chance. The SVG renderer doesn't have the problem and
-doesn't round.
-
-That is also why the PNG is drawn one bit per pixel through a two-colour palette:
-every pixel is exactly the colour asked for, nothing is anti-aliased, and a whole
-symbol is well under a kilobyte.
-
-## Reading the code
-
-- `lib/barcoder/symbology/` — what each family *is*: how many digits, which
-  tables, which bars are long, what is printed where.
-- `lib/barcoder/pattern.rb` — the output of an encoding and the input to a
-  renderer, measured entirely in modules.
-- `lib/barcoder/geometry.rb` — the one place a module becomes a pixel, so both
-  formats lay a symbol out identically.
-- `lib/barcoder/renderer/` — SVG and PNG.
-- `lib/barcoder/canvas.rb` — the PNG writer, against the specification: a header,
-  a two-entry palette, one deflated block of rows, a terminator.
-- `lib/barcoder/font.rb` — ten five-by-seven digits, because there is no font on
-  the other side of a PNG.
-
-## Development
-
-```sh
-bundle install
-bundle exec rake
-bundle exec rubocop
-```
-
-The tests assert the encodings against the reference patterns published for
-`5901234123457`, `036000291452` and `96385074`, and read the modules back out of
-a rendered PNG to check the picture says what the pattern does.
-
-Minitest is the only test dependency. The two `ActiveSupport::TestCase`
-conveniences the suite was written against — `test "…" do` and `assert_not*` —
-are carried in `test/test_helper.rb` rather than pulling Rails into the
-development bundle of a gem whose whole claim is that it needs nothing.
-
-## Licence
-
-Apache-2.0 © Studio51 Solutions. See [LICENSE](LICENSE) and [NOTICE](NOTICE).
+[Apache-2.0](LICENSE), © 2026 Studio51 Solutions. See [NOTICE](NOTICE).
