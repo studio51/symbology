@@ -1,28 +1,24 @@
-# Barcoder
+# Symbology
 
 > The number on the back of the box, drawn as the barcode it was printed as.
 
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue)](LICENSE)
-[![CI](https://github.com/studio51/barcoder/actions/workflows/ci.yml/badge.svg)](https://github.com/studio51/barcoder/actions/workflows/ci.yml)
+[![CI](https://github.com/studio51/symbology/actions/workflows/ci.yml/badge.svg)](https://github.com/studio51/symbology/actions/workflows/ci.yml)
 
-Barcoder is a self-contained Ruby gem with **no dependencies** — not on Rails,
-not on an imaging library, not on anything. Digits in, image out.
-
-It was built in-tree at `gems/barcoder` inside
-[games.directory](https://games.directory) and extracted here with its history.
+A *symbology* is what the barcode industry calls a family: EAN-13 is one, UPC-A
+is another. This gem draws them — a self-contained Ruby library with **no
+dependencies**, not on Rails, not on an imaging library, not on anything.
+Digits in, image out.
 
 ```ruby
-gem "studio51-barcoder"
+gem "symbology"
 ```
 
 ```ruby
-Barcoder.svg("5901234123457")             #=> "<svg xmlns=\"http://www.w3.org/2000/svg\"…"
-Barcoder.png("5901234123457", height: 40) #=> "\x89PNG\r\n…"
-```
+Symbology.svg("5901234123457")             #=> "<svg xmlns=\"http://www.w3.org/2000/svg\"…"
+Symbology.png("5901234123457", height: 40) #=> "\x89PNG\r\n…"
 
-```ruby
-Barcoder.svg("5901234123457")             #=> "<svg xmlns=\"http://www.w3.org/2000/svg\"…"
-Barcoder.png("5901234123457", height: 40) #=> "\x89PNG\r\n…"
+Symbology.of("036000291452")               #=> Symbology::UPCA
 ```
 
 It encodes EAN-13, UPC-A and EAN-8, lays a symbol out to the proportions the
@@ -30,6 +26,12 @@ standards specify — quiet zones, guard bars descending through the printed
 digits, the leading digit set in the margin — and refuses to draw a code that
 fails its own check digit, because a symbol no scanner will read back is worse
 than no symbol at all.
+
+Which symbology a value is depends only on how many digits it has, so you never
+have to say.
+
+It was built in-tree at `gems/barcoder` inside
+[games.directory](https://games.directory) and extracted here with its history.
 
 ## Navigation
 

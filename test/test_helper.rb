@@ -2,13 +2,13 @@
 
 $LOAD_PATH.unshift(File.expand_path("../lib", __dir__))
 
-require "barcoder"
+require "symbology"
 
 require "minitest/autorun"
 
 # The two conveniences these tests were written against.
 #
-# They came from `ActiveSupport::TestCase`, which Barcoder will not depend on: a
+# They came from `ActiveSupport::TestCase`, which Symbology will not depend on: a
 # gem whose entire claim is "no dependencies, no I/O" should not pull Rails into
 # anyone's development bundle to run its own suite. They are small enough to
 # carry, and carrying them keeps the tests exactly as they were written.

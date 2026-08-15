@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-require "barcoder/errors"
-require "barcoder/geometry"
+require "symbology/errors"
+require "symbology/geometry"
 
-module Barcoder
+module Symbology
 
   # What every image format has in common: the options it accepts and the
   # layout it draws.
   #
   # A subclass supplies a file extension, a MIME type and a `#draw`; everything
-  # about *where* a bar goes is settled by {Barcoder::Geometry}, so two formats
+  # about *where* a bar goes is settled by {Symbology::Geometry}, so two formats
   # of the same symbol are the same picture.
   #
   class Renderer
@@ -38,7 +38,7 @@ module Barcoder
 
       # Draws a symbol.
       #
-      # @param pattern [Barcoder::Pattern] the encoded symbol.
+      # @param pattern [Symbology::Pattern] the encoded symbol.
       # @param options [Hash] see {DEFAULTS}.
       #
       # @return [String] the image.
@@ -52,7 +52,7 @@ module Barcoder
       def defaults = DEFAULTS
     end
 
-    # @param pattern [Barcoder::Pattern] the encoded symbol.
+    # @param pattern [Symbology::Pattern] the encoded symbol.
     # @param options [Hash] see {DEFAULTS}.
     #
     # @raise [ArgumentError] when given an option this renderer doesn't have.
@@ -83,7 +83,7 @@ module Barcoder
 
     # Lays the symbol out for this format.
     #
-    # @return [Barcoder::Geometry] the layout.
+    # @return [Symbology::Geometry] the layout.
     #
     def build_geometry
       Geometry.new(

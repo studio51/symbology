@@ -2,9 +2,9 @@
 
 require "zlib"
 
-require "barcoder/font"
+require "symbology/font"
 
-module Barcoder
+module Symbology
 
   # A two-colour raster, and the PNG it serialises to.
   #
@@ -70,7 +70,7 @@ module Barcoder
       (top...bottom).each { |row| @rows[row][left, right - left] = ink }
     end
 
-    # Inks a digit from {Barcoder::Font}.
+    # Inks a digit from {Symbology::Font}.
     #
     # @param digit [String] a single character, `0` to `9`.
     # @param x [Numeric] the glyph's left edge.

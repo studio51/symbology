@@ -1,11 +1,11 @@
-# AGENTS.md: Barcoder
+# AGENTS.md: Symbology
 
 Instructions for AI coding agents (Claude Code and friends) working in this repo.
 Humans: this is also a fine quick-orientation read.
 
 ## Project
 
-- **Name:** barcoder · **Type:** library · **License:** Apache-2.0
+- **Name:** symbology · **Type:** library · **License:** Apache-2.0
 - 
 
 ## Conventions (Studio51 standard)

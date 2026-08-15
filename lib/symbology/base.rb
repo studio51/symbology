@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-require "barcoder/checksum"
-require "barcoder/errors"
-require "barcoder/pattern"
+require "symbology/checksum"
+require "symbology/errors"
+require "symbology/pattern"
 
-module Barcoder
+module Symbology
 
   # What a family of barcodes is: how many digits it takes, how they become
   # bars, and how they are printed underneath.
   #
-  # Every symbology Barcoder draws is a subclass, and every subclass is used as a
+  # Every symbology Symbology draws is a subclass, and every subclass is used as a
   # class rather than instantiated — a symbology has no state, only rules.
   #
   # The rules a subclass supplies:
@@ -21,7 +21,7 @@ module Barcoder
   # Validation, check digits and the digit tables are settled here, because they
   # are the same for the whole UPC/EAN family.
   #
-  class Symbology
+  class Base
 
     # The bar patterns for a digit, seven modules each.
     #
@@ -48,10 +48,10 @@ module Barcoder
       #
       # @param value [String, Integer] the printed digits.
       #
-      # @raise [Barcoder::UnsupportedValue] when the digits are the wrong shape for this symbology.
-      # @raise [Barcoder::InvalidCheckDigit] when the last digit isn't the one the rest imply.
+      # @raise [Symbology::UnsupportedValue] when the digits are the wrong shape for this symbology.
+      # @raise [Symbology::InvalidCheckDigit] when the last digit isn't the one the rest imply.
       #
-      # @return [Barcoder::Pattern] the encoded symbol.
+      # @return [Symbology::Pattern] the encoded symbol.
       #
       def encode(value)
         digits = validate!(value)
@@ -66,7 +66,7 @@ module Barcoder
       # @return [Boolean] true when the value is the right length and checks out.
       #
       def encodable?(value)
-        digits = Barcoder.digits(value)
+        digits = Symbology.digits(value)
 
         return false if digits.nil? || digits.length != self::LENGTH
 
@@ -85,7 +85,7 @@ module Barcoder
       # @return [Boolean] true when the digit count matches.
       #
       def handles?(value)
-        Barcoder.digits(value)&.length == self::LENGTH
+        Symbology.digits(value)&.length == self::LENGTH
       end
 
       # The symbology's name, as it is written on a specification — hyphen and
@@ -102,13 +102,13 @@ module Barcoder
       #
       # @param value [String, Integer] the printed digits.
       #
-      # @raise [Barcoder::UnsupportedValue] when the digits are the wrong shape for this symbology.
-      # @raise [Barcoder::InvalidCheckDigit] when the last digit isn't the one the rest imply.
+      # @raise [Symbology::UnsupportedValue] when the digits are the wrong shape for this symbology.
+      # @raise [Symbology::InvalidCheckDigit] when the last digit isn't the one the rest imply.
       #
       # @return [String] the digits.
       #
       def validate!(value)
-        digits = Barcoder.digits(value)
+        digits = Symbology.digits(value)
 
         if digits.nil? || digits.length != self::LENGTH
           raise UnsupportedValue, "#{ label } takes #{ self::LENGTH } digits, got #{ value.inspect }"

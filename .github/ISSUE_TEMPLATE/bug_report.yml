@@ -26,6 +26,6 @@ body:
     id: environment
     attributes:
       label: Environment
-      description: OS, runtime/version, browser, barcoder version.
+      description: OS, runtime/version, browser, symbology version.
     validations:
       required: false

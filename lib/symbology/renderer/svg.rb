@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require "barcoder/renderer"
-require "barcoder/version"
+require "symbology/renderer"
+require "symbology/version"
 
-module Barcoder
+module Symbology
   class Renderer
 
     # Draws a symbol as SVG.
@@ -19,7 +19,7 @@ module Barcoder
     #
     class SVG < Renderer
 
-      # SVG's own options, on top of {Barcoder::Renderer::DEFAULTS}.
+      # SVG's own options, on top of {Symbology::Renderer::DEFAULTS}.
       #
       DEFAULTS = Renderer::DEFAULTS.merge(
         font_family: "monospace", # the family the digits are set in
@@ -45,7 +45,7 @@ module Barcoder
       #
       def draw
         <<~SVG
-          <svg xmlns="http://www.w3.org/2000/svg" width="#{ number(geometry.width) }" height="#{ number(geometry.height) }" viewBox="0 0 #{ number(geometry.width) } #{ number(geometry.height) }" role="img" aria-label="#{ label }" data-barcoder="#{ Barcoder::VERSION }">
+          <svg xmlns="http://www.w3.org/2000/svg" width="#{ number(geometry.width) }" height="#{ number(geometry.height) }" viewBox="0 0 #{ number(geometry.width) } #{ number(geometry.height) }" role="img" aria-label="#{ label }" data-symbology="#{ Symbology::VERSION }">
           #{ paper }#{ bars }#{ digits }</svg>
         SVG
       end

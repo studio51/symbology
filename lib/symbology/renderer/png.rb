@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require "barcoder/canvas"
-require "barcoder/font"
-require "barcoder/renderer"
+require "symbology/canvas"
+require "symbology/font"
+require "symbology/renderer"
 
-module Barcoder
+module Symbology
   class Renderer
 
     # Draws a symbol as a PNG.
@@ -40,7 +40,7 @@ module Barcoder
 
       # Lays the symbol out on whole pixels.
       #
-      # @return [Barcoder::Geometry] the layout.
+      # @return [Symbology::Geometry] the layout.
       #
       def build_geometry
         Geometry.new(
@@ -73,7 +73,7 @@ module Barcoder
       # inside a cell of twenty-one, with the module of clearance above and below
       # that the text band leaves.
       #
-      # @param canvas [Barcoder::Canvas] the raster to draw on.
+      # @param canvas [Symbology::Canvas] the raster to draw on.
       #
       # @return [void]
       #

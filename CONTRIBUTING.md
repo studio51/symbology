@@ -1,4 +1,4 @@
-# Contributing to Barcoder
+# Contributing to Symbology
 
 Thanks for taking the time to contribute. This project follows the Studio51
 shared conventions; they're identical across all our repos, so once you know
@@ -51,4 +51,4 @@ By participating you agree to uphold our [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## Questions
 
-Open a [discussion or issue](https://github.com/studio51/barcoder/issues) or reach the team at vlad@studio51.solutions.
+Open a [discussion or issue](https://github.com/studio51/symbology/issues) or reach the team at vlad@studio51.solutions.

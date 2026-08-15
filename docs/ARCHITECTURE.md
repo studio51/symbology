@@ -1,22 +1,22 @@
-# Barcoder — architecture
+# Symbology — architecture
 
 ## Structure
 
-- `lib/barcoder/symbology/` — what each family *is*: how many digits, which
+- `lib/symbology/symbology/` — what each family *is*: how many digits, which
   tables, which bars are long, what is printed where.
-- `lib/barcoder/pattern.rb` — the output of an encoding and the input to a
+- `lib/symbology/pattern.rb` — the output of an encoding and the input to a
   renderer, measured entirely in modules.
-- `lib/barcoder/geometry.rb` — the one place a module becomes a pixel, so both
+- `lib/symbology/geometry.rb` — the one place a module becomes a pixel, so both
   formats lay a symbol out identically.
-- `lib/barcoder/renderer/` — SVG and PNG.
-- `lib/barcoder/canvas.rb` — the PNG writer, against the specification: a header,
+- `lib/symbology/renderer/` — SVG and PNG.
+- `lib/symbology/canvas.rb` — the PNG writer, against the specification: a header,
   a two-entry palette, one deflated block of rows, a terminator.
-- `lib/barcoder/font.rb` — ten five-by-seven digits, because there is no font on
+- `lib/symbology/font.rb` — ten five-by-seven digits, because there is no font on
   the other side of a PNG.
 
 ## Key decisions
 
-**No dependencies, and never any.** The only thing Barcoder needs that it does
+**No dependencies, and never any.** The only thing Symbology needs that it does
 not do itself is zlib, to deflate a PNG's image data, and that ships with Ruby.
 It draws its own digits rather than depend on an imaging library for ten glyphs.
 That constraint is the point of the gem, not an accident of its history.
@@ -25,7 +25,7 @@ That constraint is the point of the gem, not an accident of its history.
 digit computed from the ones before it. A code that fails it was mistyped,
 mis-scanned or invented, and the symbol drawn from it is a picture no scanner
 will read back — worse than no picture, because it looks like it works.
-`Barcoder.encode` raises `Barcoder::InvalidCheckDigit` instead.
+`Symbology.encode` raises `Symbology::InvalidCheckDigit` instead.
 
 **The symbology is inferred, never asked for.** Which family a value belongs to
 depends only on how many digits it has, so callers never have to say.

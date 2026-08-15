@@ -12,8 +12,8 @@ Which one a value is depends only on how many digits it has, so you never have
 to say:
 
 ```ruby
-Barcoder.symbology_for("036000291452") #=> Barcoder::Symbology::UPCA
-Barcoder.symbology_for("96385074")     #=> Barcoder::Symbology::EAN8
+Symbology.of("036000291452") #=> Symbology::UPCA
+Symbology.of("96385074")     #=> Symbology::EAN8
 ```
 
 
@@ -24,15 +24,15 @@ A code that fails its own check digit.
 Every symbology here ends in a digit computed from the ones before it. A code
 that fails it was mistyped, mis-scanned or invented, and the symbol drawn from it
 is a picture no scanner will read back — worse than no picture, because it looks
-like it works. `Barcoder.encode` raises `Barcoder::InvalidCheckDigit` rather than
+like it works. `Symbology.encode` raises `Symbology::InvalidCheckDigit` rather than
 draw one.
 
 Ask first if you hold numbers of uncertain provenance:
 
 ```ruby
-Barcoder.encodable?("5901234123457") #=> true
-Barcoder.encodable?("5901234123456") #=> false — check digit should be 7
-Barcoder.encodable?("DOOM")          #=> false
+Symbology.encodable?("5901234123457") #=> true
+Symbology.encodable?("5901234123456") #=> false — check digit should be 7
+Symbology.encodable?("DOOM")          #=> false
 ```
 
 
@@ -57,8 +57,8 @@ of an EAN-13 in the left quiet zone, and — on a UPC-A — the number-system an
 check digits outside the bars with their own bars extended to match the guards.
 
 ```ruby
-Barcoder.png("5901234123457", module_width: 4, height: 120, background: nil)
-Barcoder.svg("5901234123457", text: false, foreground: "#1f2937")
+Symbology.png("5901234123457", module_width: 4, height: 120, background: nil)
+Symbology.svg("5901234123457", text: false, foreground: "#1f2937")
 ```
 
 ### A module has to be a whole number of pixels

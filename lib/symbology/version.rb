@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Barcoder
+module Symbology
 
   # The released version, read by the gemspec and stamped into the generated
   # SVG so a rendered symbol can be traced back to the code that drew it.

@@ -17,7 +17,7 @@ release notes once a fix ships, unless you prefer to remain anonymous.
 ## Supported versions
 
 Unless stated otherwise in the [README](README.md), only the latest released
-version of Barcoder receives security fixes.
+version of Symbology receives security fixes.
 
 ## Scope
 

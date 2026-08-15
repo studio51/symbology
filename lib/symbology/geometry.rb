@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-module Barcoder
+module Symbology
 
   # Where everything sits, once a module is worth a number of pixels.
   #
-  # A {Barcoder::Pattern} is measured in modules and knows nothing else; a
+  # A {Symbology::Pattern} is measured in modules and knows nothing else; a
   # renderer draws rectangles and glyphs and wants pixels. This does that one
   # conversion, so both renderers lay a symbol out identically and neither
   # repeats the arithmetic.
@@ -26,7 +26,7 @@ module Barcoder
     attr_reader :left_quiet    # the left margin, in modules
     attr_reader :right_quiet   # the right margin, in modules
 
-    # @param pattern [Barcoder::Pattern] the encoded symbol.
+    # @param pattern [Symbology::Pattern] the encoded symbol.
     # @param module_width [Numeric] what one module is worth, in pixels.
     # @param height [Numeric] how tall an ordinary bar is, in pixels.
     # @param text [Boolean] whether the digits are printed under the symbol.
@@ -93,7 +93,7 @@ module Barcoder
     # in its own cell, so the digits line up with the bars encoding them rather
     # than merely with each other.
     #
-    # @param text [Barcoder::Pattern::Text] the run of digits.
+    # @param text [Symbology::Pattern::Text] the run of digits.
     #
     # @yieldparam digit [String] the digit to draw.
     # @yieldparam centre [Numeric] the centre of its cell, in pixels from the left edge.

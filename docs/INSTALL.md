@@ -3,21 +3,21 @@
 ## Requirements
 
 Ruby 3.2+ — `Data.define` is used for the value objects an encoded symbol is
-made of. Nothing else. Barcoder has no dependencies and never will: the only
+made of. Nothing else. Symbology has no dependencies and never will: the only
 thing it needs that it does not do itself is zlib, to deflate a PNG's image
 data, and that ships with Ruby.
 
 ## Quick start
 
 ```ruby
-gem "studio51-barcoder"
+gem "symbology"
 ```
 
 ```ruby
-require "barcoder"
+require "symbology"
 
-Barcoder.svg("5901234123457")             #=> "<svg xmlns=…"
-Barcoder.png("5901234123457", height: 40) #=> "\x89PNG\r\n…"
+Symbology.svg("5901234123457")             #=> "<svg xmlns=…"
+Symbology.png("5901234123457", height: 40) #=> "\x89PNG\r\n…"
 ```
 
 ## Development

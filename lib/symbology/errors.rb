@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-module Barcoder
+module Symbology
 
-  # Base class for everything Barcoder raises, so a caller can rescue the whole
+  # Base class for everything Symbology raises, so a caller can rescue the whole
   # library with one class.
   #
   class Error < StandardError; end
 
-  # Raised when the digits given don't belong to any symbology Barcoder draws.
+  # Raised when the digits given don't belong to any symbology Symbology draws.
   #
   # A code of the wrong length, one carrying anything other than digits, or a
   # blank value.

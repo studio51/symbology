@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-module Barcoder
+module Symbology
 
   # An encoded symbol: the bars, where they are long, and what is printed under
   # them.
   #
-  # The output of a {Barcoder::Symbology} and the input to a renderer, and the
+  # The output of a {Symbology::Base} and the input to a renderer, and the
   # only thing the two share. It is measured entirely in *modules* — the width of
   # the narrowest bar, the unit every barcode standard specifies its geometry in
   # — so nothing here knows about pixels, and a renderer is free to choose what a
@@ -49,7 +49,7 @@ module Barcoder
     end
 
     attr_reader :value      # the digits this symbol encodes, as a string
-    attr_reader :symbology  # the Barcoder::Symbology that encoded them
+    attr_reader :symbology  # the Symbology::Base that encoded them
     attr_reader :modules    # one boolean per module, true where the symbol is dark
     attr_reader :texts      # the Text runs printed with the symbol
 
@@ -57,7 +57,7 @@ module Barcoder
     # @param symbology [Class] the symbology that produced the pattern.
     # @param modules [Array<Boolean>] one entry per module, true where dark.
     # @param long_ranges [Array<Range>] the module ranges drawn at full length.
-    # @param texts [Array<Barcoder::Pattern::Text>] what is printed, and where.
+    # @param texts [Array<Symbology::Pattern::Text>] what is printed, and where.
     # @param quiet_zone [Array(Integer, Integer)] the left and right quiet zones, in modules.
     #
     # @return [void]
@@ -114,7 +114,7 @@ module Barcoder
     # Adjacent dark modules are merged into one bar, and a run is split wherever
     # its length changes so no bar is half long and half short.
     #
-    # @return [Array<Barcoder::Pattern::Bar>] the bars.
+    # @return [Array<Symbology::Pattern::Bar>] the bars.
     #
     def bars
       @bars ||= begin

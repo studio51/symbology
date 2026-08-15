@@ -1,29 +1,29 @@
 # frozen_string_literal: true
 
-require "barcoder/version"
-require "barcoder/errors"
-require "barcoder/checksum"
-require "barcoder/pattern"
-require "barcoder/symbology"
-require "barcoder/symbology/ean13"
-require "barcoder/symbology/ean8"
-require "barcoder/symbology/upca"
-require "barcoder/geometry"
-require "barcoder/renderer"
-require "barcoder/renderer/svg"
-require "barcoder/renderer/png"
+require "symbology/version"
+require "symbology/errors"
+require "symbology/checksum"
+require "symbology/pattern"
+require "symbology/base"
+require "symbology/ean13"
+require "symbology/ean8"
+require "symbology/upca"
+require "symbology/geometry"
+require "symbology/renderer"
+require "symbology/renderer/svg"
+require "symbology/renderer/png"
 
 # Draws the number on the back of a box as the barcode it was printed as.
 #
-# Barcoder takes digits and gives back a picture of them — an SVG or a PNG of the
+# Symbology takes digits and gives back a picture of them — an SVG or a PNG of the
 # EAN-13, EAN-8 or UPC-A symbol those digits are, ready to be shown on a page,
 # put in an email or sent to a label printer.
 #
-#   Barcoder.svg("5030917236075")             #=> "<svg xmlns=…"
-#   Barcoder.png("5030917236075", height: 40) #=> "\x89PNG\r\n…"
+#   Symbology.svg("5030917236075")             #=> "<svg xmlns=…"
+#   Symbology.png("5030917236075", height: 40) #=> "\x89PNG\r\n…"
 #
-#   Barcoder.encodable?("5030917236075") #=> true
-#   Barcoder.symbology_for("036000291452") #=> Barcoder::Symbology::UPCA
+#   Symbology.encodable?("5030917236075") #=> true
+#   Symbology.of("036000291452") #=> Symbology::UPCA
 #
 # ## What it will not do
 #
@@ -37,7 +37,7 @@ require "barcoder/renderer/png"
 # never reads a database, makes a request, or writes a file. Digits in, image
 # out.
 #
-module Barcoder
+module Symbology
 
   # The symbologies drawn, in the order a value is offered to them.
   #
@@ -81,7 +81,7 @@ module Barcoder
     #
     # @return [Class, nil] the symbology, or nil when nothing takes that many digits.
     #
-    def symbology_for(value) = SYMBOLOGIES.find { |symbology| symbology.handles?(value) }
+    def of(value) = SYMBOLOGIES.find { |symbology| symbology.handles?(value) }
 
     # Whether a value can be drawn.
     #
@@ -89,20 +89,20 @@ module Barcoder
     #
     # @return [Boolean] true when some symbology takes it and its check digit holds.
     #
-    def encodable?(value) = symbology_for(value)&.encodable?(value) || false
+    def encodable?(value) = of(value)&.encodable?(value) || false
 
     # Encodes a value into the pattern its symbology says it is.
     #
     # @param value [String, Integer] the printed digits.
     # @param symbology [Class, nil] force a symbology, instead of choosing by digit count.
     #
-    # @raise [Barcoder::UnsupportedValue] when nothing draws that many digits.
-    # @raise [Barcoder::InvalidCheckDigit] when the last digit isn't the one the rest imply.
+    # @raise [Symbology::UnsupportedValue] when nothing draws that many digits.
+    # @raise [Symbology::InvalidCheckDigit] when the last digit isn't the one the rest imply.
     #
-    # @return [Barcoder::Pattern] the encoded symbol.
+    # @return [Symbology::Pattern] the encoded symbol.
     #
     def encode(value, symbology: nil)
-      symbology ||= symbology_for(value)
+      symbology ||= of(value)
 
       if symbology.nil?
         raise UnsupportedValue, "#{ value.inspect } is not an EAN-13, EAN-8 or UPC-A"
@@ -116,11 +116,11 @@ module Barcoder
     # @param value [String, Integer] the printed digits.
     # @param format [Symbol] `:svg` or `:png`.
     # @param symbology [Class, nil] force a symbology, instead of choosing by digit count.
-    # @param options [Hash] see {Barcoder::Renderer::DEFAULTS}.
+    # @param options [Hash] see {Symbology::Renderer::DEFAULTS}.
     #
-    # @raise [Barcoder::UnknownFormat] when asked for a format that isn't drawn.
-    # @raise [Barcoder::UnsupportedValue] when nothing draws that many digits.
-    # @raise [Barcoder::InvalidCheckDigit] when the last digit isn't the one the rest imply.
+    # @raise [Symbology::UnknownFormat] when asked for a format that isn't drawn.
+    # @raise [Symbology::UnsupportedValue] when nothing draws that many digits.
+    # @raise [Symbology::InvalidCheckDigit] when the last digit isn't the one the rest imply.
     #
     # @return [String] the image — SVG markup, or binary for a raster format.
     #
@@ -131,7 +131,7 @@ module Barcoder
     # Draws a value as SVG.
     #
     # @param value [String, Integer] the printed digits.
-    # @param options [Hash] see {Barcoder::Renderer::SVG::DEFAULTS}.
+    # @param options [Hash] see {Symbology::Renderer::SVG::DEFAULTS}.
     #
     # @return [String] the SVG document.
     #
@@ -140,7 +140,7 @@ module Barcoder
     # Draws a value as a PNG.
     #
     # @param value [String, Integer] the printed digits.
-    # @param options [Hash] see {Barcoder::Renderer::PNG::DEFAULTS}.
+    # @param options [Hash] see {Symbology::Renderer::PNG::DEFAULTS}.
     #
     # @return [String] the PNG, as binary.
     #
@@ -150,7 +150,7 @@ module Barcoder
     #
     # @param format [Symbol, String] the format's name.
     #
-    # @raise [Barcoder::UnknownFormat] when it isn't drawn.
+    # @raise [Symbology::UnknownFormat] when it isn't drawn.
     #
     # @return [Class] the renderer.
     #
@@ -164,7 +164,7 @@ module Barcoder
     #
     # @param format [Symbol, String] the format's name.
     #
-    # @raise [Barcoder::UnknownFormat] when it isn't drawn.
+    # @raise [Symbology::UnknownFormat] when it isn't drawn.
     #
     # @return [String] the MIME type.
     #

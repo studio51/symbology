@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Barcoder
+module Symbology
 
   # The modulo-10 check digit every symbology in the UPC/EAN family carries.
   #

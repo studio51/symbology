@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to Barcoder are documented here, following
+All notable changes to Symbology are documented here, following
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
@@ -15,9 +15,12 @@ All notable changes to Barcoder are documented here, following
 
 ### Changed
 
-- Published as `studio51-barcoder`: `barcoder` on RubyGems is a dormant 2010 gem
-  wrapping GBarcode. The namespace, the entry point and `require "barcoder"` are
-  unchanged.
+- Renamed to `Symbology`, from `Barcoder`. `barcoder` on RubyGems is a dormant
+  2010 GBarcode wrapper, and rather than carry a vendor prefix the gem took the
+  industry's own word for a barcode family — which was already its internal
+  vocabulary. The abstract base that subclasses inherit from is `Symbology::Base`
+  (it held the name `Symbology` before), and `Barcoder.symbology_for` is
+  `Symbology.of`; `for` is a Ruby keyword and cannot be a method name here.
 - The suite runs on plain Minitest. It was written against
   `ActiveSupport::TestCase`, and the two conveniences it used — `test "…" do` and
   the `assert_not*` spellings — are now carried in `test/test_helper.rb`. A gem
