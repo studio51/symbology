@@ -35,7 +35,7 @@ It was built in-tree at `gems/barcoder` inside
 
 ## Navigation
 
-This repository adheres to the [Studio51 Solutions Common Standard v1](https://github.com/studio51/standards/blob/main/standards/common/v1/STANDARD.md), with each section documented properly in its own file.
+This repository adheres to the [Studio51 Solutions Common Standard v2](https://github.com/studio51/standards/blob/main/standards/common/v2/STANDARD.md), with each section documented properly in its own file.
 
 - [Architecture](docs/ARCHITECTURE.md) — how a symbol is built, file by file
 - [Install & setup](docs/INSTALL.md)
